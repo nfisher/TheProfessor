@@ -4,3 +4,10 @@ Run the following command in a new terminal;
 
 $ source devenv
 
+h2. Using Rake (ruby build tool)
+
+$ rake -T # list public tasks including any documentation
+
+h2. Testing with RSpec
+
+$ rake spec # runs the tests
