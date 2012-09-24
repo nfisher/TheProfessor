@@ -1,0 +1,7 @@
+h2. Getting Started
+
+You'll need to install RVM;
+
+Once installed in a terminal;
+
+$ source devenv

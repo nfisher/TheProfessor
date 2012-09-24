@@ -17,3 +17,5 @@ tmp
 _yardoc
 doc/
 *.swp
+.DS_Store
+bin

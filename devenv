@@ -1,0 +1,20 @@
+if [ ! -d ~/.rvm ]; then
+  echo "Installing RVM..."
+  curl -L https://get.rvm.io | bash -s stable --ruby
+fi
+
+echo "Sourcing RVM..."
+[[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
+
+rvm list rubies|grep ruby-1.9.3 > /dev/null
+RUBY_193_INSTALLED=$?
+if [ 0 -ne $RUBY_193_INSTALLED ]; then
+  echo "Installing Ruby 1.9.3..."
+  rvm install ruby-1.9.3
+fi
+
+BUNDLE_VERSION=$(bundle --version)
+if [ "Bundler version 1.2.0" != "$BUNDLE_VERSION" ]; then
+  sudo gem install --no-ri --no-rdoc bundler -v1.2.0
+fi
+bundle install --binstubs --quiet --without=production
