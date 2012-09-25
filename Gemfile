@@ -2,6 +2,7 @@ source :rubygems
 
 gem 'sinatra', '1.3.3', :require => 'sinatra'
 gem 'data_mapper', '1.2.0'
+
 group :development do
   gem 'heroku'
   gem 'shotgun'
@@ -9,6 +10,7 @@ group :development do
 end
 
 group :production do
+  gem 'pg'
   gem 'dm-postgres-adapter', :require => 'dm-postgres-adapter'
   gem 'puma'
 end
