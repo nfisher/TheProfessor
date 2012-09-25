@@ -1,11 +1,4 @@
-class Person
-  include DataMapper::Resource
-  property :id,   Serial
-  property :firstname, String, :required => true
-  property :lastname, String,  :required => true
-  property :username, String,  :required => true
-  property :uid,  Integer,     :required => true
-end
+require File.join(File.dirname(__FILE__), 'models')
 
 class App < Sinatra::Base
   get '/' do
@@ -30,8 +23,8 @@ class App < Sinatra::Base
   end
 
   get '/profiles/' do
-    profiles = Person.find_all
-    halt 200, profiles.to_a.to_json
+    profiles = Person.all
+    halt 200, profiles.to_json
   end
 end
 
