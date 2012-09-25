@@ -11,3 +11,13 @@ $ rake -T # list public tasks including any documentation
 h2. Testing with RSpec
 
 $ rake spec # runs the tests
+
+h2. Deploying to Heroku
+
+You'll need to sign up for a Heroku account from there the commands below should get you going.
+
+$ heroku create
+$ heroku login
+$ heroku addons:add heroku-postgresql
+$ heroku pg:promote $COLOUR
+$ git push heroku master
