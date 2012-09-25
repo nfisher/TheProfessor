@@ -14,4 +14,7 @@ end
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
+
+  DataMapper.setup(:default, 'sqlite::memory:')
+  DataMapper.finalize
 end

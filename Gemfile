@@ -9,6 +9,7 @@ end
 
 group :production do
   gem 'dm-postgres-adapter', :require => 'dm-postgres-adapter'
+  gem 'puma'
 end
 
 group :test do

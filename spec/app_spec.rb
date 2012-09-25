@@ -1,35 +1,58 @@
 require 'spec_helper'
 
+def create_profile(firstname, lastname, uid)
+  post '/profiles/', params = { :firstname => firstname, :lastname => lastname, :uid => uid }
+end
+
+def status_should(status)
+  last_response.status.should status
+end
+
+def location_header
+  last_response.headers['Location']
+end
+
 describe 'App' do
-  it 'should respond to GET' do
+  before :each do
+    # This drops the table before each test ensuring it's clean.
+    # The DB is a memory DB which means you could have many instances running in a commit build.
+    DataMapper.auto_migrate!
+  end
+
+  it 'should respond to a GET request' do
     get '/'
     last_response.should be_ok
     last_response.body.should match(/Hello/)
   end
 
-  # TODO: This is a shitty test name
-  it 'should return a profile when found' do
-    get '/profiles/10101'
-    last_response.should be_ok
-    expected =<<-EOT
-{"fullname": "Nathan Fisher", "profileNumber": "10101"}
-    EOT
-    last_response.body.should eq(expected)
-  end
-
-  # TODO: This is a shitty test name
-  it 'should return an alternate profile when found' do
-    get '/profiles/10100'
-    last_response.should be_ok
-    expected =<<-EOT
-{"fullname": "Tom Cowling", "profileNumber": "10100"}
-    EOT
-    last_response.body.should eq(expected)
-  end
-
   it 'should return an error when a profile is not found' do
-    get '/profiles/20000'
+    get '/profiles/40404'
     last_response.should_not be_ok
-    last_response.status.should be(404)
+    status_should be(404)
+  end
+
+  it 'should return a profile when found' do
+    create_profile('Bamdad', 'Dashtban', 1238)
+    get '/profiles/1'
+    last_response.should be_ok
+    last_response.body.should eq("{\"id\":1,\"firstname\":\"Bamdad\",\"lastname\":\"Dashtban\",\"uid\":1238}")
+  end
+
+  it 'should create a profile when details are POSTed' do
+    create_profile('Andy', 'Robinson', 1234)
+    status_should be(201)
+    location_header.should eq('http://example.org/profiles/1')
+  end
+
+  it 'should have a unique Location for each newly created profile' do
+    create_profile('Ignacio', 'Duarte', 1235)
+    status_should be(201)
+    andys_location = location_header
+
+    create_profile('Tom', 'Cowling', 1236)
+    status_should be(201)
+    nathans_location = location_header
+
+    nathans_location.should_not eq(andys_location)
   end
 end

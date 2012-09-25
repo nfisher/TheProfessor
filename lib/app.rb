@@ -1,22 +1,28 @@
+class Person
+  include DataMapper::Resource
+  property :id,   Serial
+  property :firstname, String, :required => true
+  property :lastname, String,  :required => true
+  property :uid,  Integer,     :required => true
+end
+
 class App < Sinatra::Base
-  NATHAN =<<-EOT
-{"fullname": "Nathan Fisher", "profileNumber": "10101"}
-  EOT
-
-  TOM =<<-EOT
-{"fullname": "Tom Cowling", "profileNumber": "10100"}
-  EOT
-
   get '/' do
-    "Hello"
+    'Hello'
+  end
+
+  post '/profiles/' do
+    if profile = Person.create(params)
+      response.headers['Location'] = "http://#{request.host}/profiles/#{profile.id}"
+      halt 201
+    else
+      halt 400
+    end
   end
 
   get '/profiles/:profile' do
-    profiles = { 10101 => NATHAN, 10100 => TOM }
-
-    profile = params[:profile].to_i
-    if profiles.has_key? profile
-      profiles[profile]
+    if profile = Person.first(params[:profile])
+      halt 200, profile.to_json
     else
       halt 404, 'Not found.'
     end
