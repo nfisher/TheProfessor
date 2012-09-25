@@ -1,4 +1,5 @@
 source :rubygems
+ruby '1.9.3'
 
 gem 'sinatra', '1.3.3', :require => 'sinatra'
 gem 'data_mapper', '1.2.0'
