@@ -3,6 +3,7 @@ class Person
   property :id,   Serial
   property :firstname, String, :required => true
   property :lastname, String,  :required => true
+  property :username, String,  :required => true
   property :uid,  Integer,     :required => true
 end
 
@@ -16,7 +17,7 @@ class App < Sinatra::Base
       response.headers['Location'] = "http://#{request.host}/profiles/#{profile.id}"
       halt 201
     else
-      halt 400
+      halt 400, 'Not found.'
     end
   end
 
@@ -26,6 +27,11 @@ class App < Sinatra::Base
     else
       halt 404, 'Not found.'
     end
+  end
+
+  get '/profiles/' do
+    profiles = Person.find_all
+    halt 200, profiles.to_a.to_json
   end
 end
 

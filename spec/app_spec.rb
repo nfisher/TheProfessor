@@ -1,7 +1,8 @@
 require 'spec_helper'
 
-def create_profile(firstname, lastname, uid)
-  post '/profiles/', params = { :firstname => firstname, :lastname => lastname, :uid => uid }
+def create_profile(firstname, lastname, uid, username = nil)
+  username ||= firstname[0].downcase +  lastname.downcase
+  post '/profiles/', params = { :firstname => firstname, :lastname => lastname, :username => username, :uid => uid }
 end
 
 def status_should(status)
@@ -35,7 +36,7 @@ describe 'App' do
     create_profile('Bamdad', 'Dashtban', 1238)
     get '/profiles/1'
     last_response.should be_ok
-    last_response.body.should eq("{\"id\":1,\"firstname\":\"Bamdad\",\"lastname\":\"Dashtban\",\"uid\":1238}")
+    last_response.body.should eq("{\"id\":1,\"firstname\":\"Bamdad\",\"lastname\":\"Dashtban\",\"username\":\"bdashtban\",\"uid\":1238}")
   end
 
   it 'should create a profile when details are POSTed' do
@@ -54,5 +55,19 @@ describe 'App' do
     nathans_location = location_header
 
     nathans_location.should_not eq(andys_location)
+  end
+
+  it 'should provide an empty list if no profiles exist' do
+    get '/profiles/'
+    last_response.should be_ok
+    last_response.body.should eq('[]')
+  end
+
+  it 'should provide the url, firstname and lastname for each profile.' do
+    create_profile('Nathan', 'Fisher', 1239)
+    get '/profiles/'
+    last_response.should be_ok
+    # TODO: should include the self-referencing URL for the profile
+    last_response.body.should eq("[{\"id\":1,\"firstname\":\"Nathan\",\"lastname\":\"Fisher\",\"username\":\"nfisher\",\"uid\":1239}]")
   end
 end
