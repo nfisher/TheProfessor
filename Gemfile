@@ -3,6 +3,7 @@ source :rubygems
 gem 'sinatra', '1.3.3', :require => 'sinatra'
 gem 'data_mapper', '1.2.0'
 group :development do
+  gem 'heroku'
   gem 'shotgun'
   gem 'dm-sqlite-adapter', :require => 'dm-sqlite-adapter'
 end
