@@ -10,8 +10,8 @@ configure :production do
   DataMapper.setup(:default, ENV['DATABASE_URL'])
 end
 
-require File.join(File.dirname(__FILE__), 'lib', 'app.rb')
+require File.join(File.dirname(__FILE__), 'lib', 'profile_app.rb')
 DataMapper.auto_upgrade!
 
-run App
+run ProfileApp
 

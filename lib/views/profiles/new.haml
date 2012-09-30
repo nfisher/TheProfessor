@@ -1,0 +1,63 @@
+%form{:name => 'profile', :id => 'profile', :action => '/api/profiles/', :method => 'POST', :onsubmit => 'submit_form(this); return false;' }
+  %ol
+    %li
+      %label(for='firstname') First Name
+      %input(name='firstname')
+    %li
+      %label(for='lastname') Last Name
+      %input(name='lastname')
+    %li
+      %label(for='username') Username
+      %input(name='username')
+    %li
+      %label(for='uid') UID or Employee #
+      %input(name='uid')
+    %li
+      %label(for='authorized_keys') Authorized Keys
+      %textarea#authorized_keys(name='authorized_keys')
+    %li
+      %label
+      %button(type='submit') Submit
+:javascript
+  function submit_form(form) {
+    try {
+      var request = new XMLHttpRequest();
+      request.open('POST', form.action, true);
+      request.onreadystatechange = function () {
+        if (request.readyState != 4) return;
+        if (request.status == 400) {
+          errors = JSON.parse(request.responseText)
+          error_strings = '';
+          for(error in errors) {
+            // TODO: use the error object
+            error_strings += error + ': ' + errors[error][0]) + '\n';
+          }
+          alert('there be errors in thar form!');
+        } else if(request.status == 200) {
+          alert("Success: " + request.responseText);
+        }
+      };
+      var data = '';
+      var inputs = form.getElementsByTagName('input');
+      var len = inputs.length;
+      for(i = 0; i < len; i++) {
+        data = join_data(inputs[i].name + '=' + escape(inputs[i].value), data);
+      }
+      var textarea = form.getElementsByTagName('textarea');
+      var select = form.getElementsByTagName('select');
+
+      alert(data);
+
+      request.send(data);
+    } catch(e) {
+      alert(e);
+    }
+  }
+
+  function join_data(segment, block) {
+    if('' === block) {
+      return segment;
+    } else {
+      return block + '&' + segment;
+    }
+  }
