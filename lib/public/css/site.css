@@ -109,6 +109,7 @@ input, select {
 h1 { font-size: 2.57em; }
 h1, h2, h3, h4, h5, h6 {
   color:#423F37;
+  margin:0.3em 0;
 }
 p {
   line-height:1.6em;
@@ -121,12 +122,12 @@ nav {
 }
 body>* { margin-left:2em; margin-right:2em; }
 body>header { margin-left:0; margin-right:0; }
-form ol {
+form ol.fields {
+  list-style:none;
   margin:0.3em 0;
 }
-form li {
+form ol.fields li {
   margin:0.3em 0;
-  list-style:none;
 }
 textarea {
   border:1px solid #423F37;
@@ -149,4 +150,28 @@ label {
 hr {
   border:0 none;
   border-bottom:1px solid #57534A;
+}
+.success {
+  background:#ccffcc;
+  border:1px solid green;
+  border-radius:6px;
+  display:none;
+  padding:1.6em;
+}
+.errors {
+  background:#ffcccc;
+  border:1px solid red;
+  border-radius:6px;
+  display:none;
+  padding:1.6em;
+  margin-bottom:0.6em;
+}
+.errors>* {
+  color:red;
+}
+.errors ol {
+  margin-left:1.4em;
+}
+.errors li {
+  line-height:1.6em;
 }

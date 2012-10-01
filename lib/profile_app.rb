@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), 'models')
 
 class ProfileApp < Sinatra::Base
   set :views, File.join(File.dirname(__FILE__), 'views')
-  set :haml, :layout => :layout, :format => :html5
+  set :haml, :layout => :layout, :format => :html5, :ugly => true
 
   get '/' do
     'Hello'
