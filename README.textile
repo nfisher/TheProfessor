@@ -2,22 +2,24 @@ h2. Getting Started
 
 Run the following command in a new terminal;
 
-$ source devenv
+ @$ source devenv@
 
 h2. Using Rake (ruby build tool)
 
-$ rake -T # list public tasks including any documentation
+ @$ rake -T # list public tasks including any documentation@
 
 h2. Testing with RSpec
 
-$ rake spec # runs the tests
+ @$ rake spec # runs the tests@
 
 h2. Deploying to Heroku
 
 You'll need to sign up for a Heroku account from there the commands below should get you going.
 
-$ heroku create
-$ heroku login
-$ heroku addons:add heroku-postgresql
-$ heroku pg:promote $COLOUR
-$ git push heroku master
+<pre>
+ $ heroku create
+ $ heroku login
+ $ heroku addons:add heroku-postgresql
+ $ heroku pg:promote $COLOUR            # colour is in the output of the previous command
+ $ git push heroku master
+</pre>
