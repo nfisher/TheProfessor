@@ -17,6 +17,12 @@ describe 'ProfileApp' do
     last_response.should be_ok
   end
 
+  it 'should return an edit form' do
+    create_profile('Bamdad', 'Dashtban', 1238)
+    get '/profiles/1/edit'
+    last_response.should be_ok
+  end
+
   describe "profile api" do
     it 'should return an error when a profile is not found' do
       get '/api/profiles/40404'

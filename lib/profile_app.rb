@@ -15,6 +15,9 @@ class ProfileApp < Sinatra::Base
     haml :'profiles/new', :format => :html5
   end
 
+  get '/profiles/:profile_id/edit' do
+  end
+
 
   #
   # API
