@@ -49,7 +49,7 @@ class ProfileApp < Sinatra::Base
 
   # article
   #
-  get '/api/articles/:id' do
+  get '/api/articles/:id.json' do
     article = Article.get(params[:id])
     article.to_json
   end

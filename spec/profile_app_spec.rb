@@ -87,7 +87,7 @@ describe 'ProfileApp' do
 
     it 'should return the expected article' do
       create_article('NoSQL', 'NoSQL Sub', 'Robert Rees', '2012-10-17', 'content')
-      get '/api/articles/1'
+      get '/api/articles/1.json'
       last_response.should be_ok
       last_response.body.should eq(expected_json_article('NoSQL', 'NoSQL Sub', 'Robert Rees', '2012-10-17', 'content'))
     end
