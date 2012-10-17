@@ -64,6 +64,11 @@ class ProfileApp < Sinatra::Base
     end
   end
 
+  get '/articles/?' do
+    @articles = Article.all()
+    haml :'articles/index'
+  end
+
   get '/articles/new' do
     haml :'articles/new'
   end

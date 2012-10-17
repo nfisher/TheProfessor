@@ -93,16 +93,25 @@ describe 'ProfileApp' do
     end
   end
 
-  describe 'article ui' do
-    it 'should respond to a get request' do
-      get '/articles/new'
-      last_response.should be_ok
-      last_response.body.should include('/api/articles')
-      last_response.body.should include('Title')
-      last_response.body.should include('Subtitle')
-      last_response.body.should include('Author')
-      last_response.body.should include('Published')
-      last_response.body.should include('Content')
+  describe 'article' do
+    describe 'new' do
+      it 'should respond to a get request' do
+        get '/articles/new'
+        last_response.should be_ok
+        last_response.body.should include('/api/articles')
+        last_response.body.should include('Title')
+        last_response.body.should include('Subtitle')
+        last_response.body.should include('Author')
+        last_response.body.should include('Published')
+        last_response.body.should include('Content')
+      end
+    end
+
+    describe 'index' do
+      it 'should respond to a get request' do
+        get '/articles'
+        last_response.should be_ok
+      end
     end
   end
 end
