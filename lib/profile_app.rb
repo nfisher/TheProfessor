@@ -46,5 +46,26 @@ class ProfileApp < Sinatra::Base
     response.headers['Content-Type'] = 'application/json'
     halt 200, profiles.to_json
   end
+
+  # article
+  #
+  get '/api/articles/:id' do
+    article = Article.get(params[:id])
+    article.to_json
+  end
+
+  post '/api/articles/?' do
+    article = Article.create(params)
+    if article.saved? 
+      response.headers['Location'] = "http://#{request.host}/api/articles/#{article.id}"
+      halt 201, article.to_json
+    else
+      halt 400, article.errors.to_hash.to_json
+    end
+  end
+
+  get '/articles/new' do
+    haml :'articles/new'
+  end
 end
 

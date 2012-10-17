@@ -1,0 +1,26 @@
+%form{:name => 'article', :id => 'article', :action => '/api/articles', :method => 'POST', :onsubmit => 'submit_form(this); return false;' }
+
+  #article_errors.errors
+    %h3 Opps there were errors
+    %ol
+  #article_success.success
+    Awesome!! Your article has been added. :)
+  %ol.fields
+    %li
+      %label(for='title') Title
+      %input(name='title')
+    %li
+      %label(for='subtitle') Subtitle
+      %input(name='subtitle')
+    %li
+      %label(for='author') Author
+      %input(name='author')
+    %li
+      %label(for='published') Published (YYYY-MM-DD)
+      %input(name='published')
+    %li
+      %label(for='content') Content
+      %textarea#article_content(name='content')
+    %li
+      %label
+      %button(type='submit') Submit

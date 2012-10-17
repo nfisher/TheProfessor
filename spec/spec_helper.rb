@@ -33,9 +33,18 @@ def create_profile(firstname, lastname, uid)
   post '/api/profiles/', params = { :firstname => firstname, :lastname => lastname, :username => username, :uid => uid }
 end
 
+def create_article(title, subtitle, author, published, content)
+  post '/api/articles', params = { :title => title, :subtitle => subtitle, :author => author, :published => published, :content => content}
+end
+
+
 def expected_json_profile(firstname, lastname, uid)
   username ||= username(firstname, lastname)
   "{\"id\":1,\"firstname\":\"#{firstname}\",\"lastname\":\"#{lastname}\",\"username\":\"#{username}\",\"uid\":#{uid},\"authorized_keys\":null}"
+end
+
+def expected_json_article(title, subtitle, author, date, content, id=1)
+  "{\"id\":#{id},\"title\":\"#{title}\",\"subtitle\":\"#{subtitle}\",\"author\":\"#{author}\",\"published\":\"#{date}\",\"content\":\"#{content}\"}"
 end
 
 def status_should(status)

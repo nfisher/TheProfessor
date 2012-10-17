@@ -78,4 +78,31 @@ describe 'ProfileApp' do
       last_response.body.should eq("[#{expected_json_profile('Nathan', 'Fisher', 1239)}]")
     end
   end
+
+  describe 'article api' do
+    it 'should create an article when all fields are provided' do
+      create_article('NoSQL', 'NoSQL Sub', 'Robert Rees', '2012-10-17', 'content')
+      status_should be(201)
+    end
+
+    it 'should return the expected article' do
+      create_article('NoSQL', 'NoSQL Sub', 'Robert Rees', '2012-10-17', 'content')
+      get '/api/articles/1'
+      last_response.should be_ok
+      last_response.body.should eq(expected_json_article('NoSQL', 'NoSQL Sub', 'Robert Rees', '2012-10-17', 'content'))
+    end
+  end
+
+  describe 'article ui' do
+    it 'should respond to a get request' do
+      get '/articles/new'
+      last_response.should be_ok
+      last_response.body.should include('/api/articles')
+      last_response.body.should include('Title')
+      last_response.body.should include('Subtitle')
+      last_response.body.should include('Author')
+      last_response.body.should include('Published')
+      last_response.body.should include('Content')
+    end
+  end
 end
